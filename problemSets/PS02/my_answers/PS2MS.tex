@@ -32,6 +32,7 @@
 \usepackage{url}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{verbatimbox}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -118,6 +119,7 @@
 \textbf{Preparing the data:}
 	\lstinputlisting[language=R, firstline=39, lastline=46]{PS2MS.R} 
 	
+Variables \texttt{countries '20 of 192' } and \texttt{sanctions 'None' } were set as reference categories.
 	
 \textbf{Logistic regression formula:}
 
@@ -135,6 +137,54 @@
 	\begin{table}[H] \centering   \caption{}   \label{} \begin{tabular}{@{\extracolsep{5pt}}lc} \\[-1.8ex]\hline \hline \\[-1.8ex]  & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ \cline{2-2} \\[-1.8ex] & choice \\ \hline \\[-1.8ex]  countries80 of 192 & 0.33636$^{***}$ \\   & (0.054) \\   & \\  countries160 of 192 & 0.64835$^{***}$ \\   & (0.054) \\   & \\  sanctions5\% & 0.19186$^{***}$ \\   & (0.062) \\   & \\  sanctions15\% & $-$0.13325$^{**}$ \\   & (0.062) \\   & \\  sanctions20\% & $-$0.30356$^{***}$ \\   & (0.062) \\   & \\  Constant & $-$0.27266$^{***}$ \\   & (0.054) \\   & \\ \hline \\[-1.8ex] Observations & 8,500 \\ Log Likelihood & $-$5,784.130 \\ Akaike Inf. Crit. & 11,580.260 \\ \hline \hline \\[-1.8ex] \textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ \end{tabular} \end{table} 
 
 \vspace{.25cm}
+
+	\lstinputlisting[language=R, firstline=55, lastline=57]{PS2MS.R} 
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{verbbox}
+			(Intercept)        0.7613492
+			countries80 of 192 1.3998442
+			countries160 of 192 1.9123823
+			sanctions5%       1.2114952
+			sanctions15%      0.8752484
+			sanctions20%      0.7381826
+		\end{verbbox}
+		\theverbbox
+	\end{table}
+
+		
+	\lstinputlisting[language=R, firstline=59, lastline=61]{PS2MS.R} 
+	
+	\begin{table}[htbp]
+		\centering
+		\begin{verbbox}
+			(Intercept)        -23.86508
+			countries80 of 192 39.98442
+			countries160 of 192 91.23823
+			sanctions5%       21.14952
+			sanctions15%      -12.47516
+			sanctions20%      -26.18174
+		\end{verbbox}
+		\theverbbox
+	\end{table}
+	
+\textbf{Interpretation of the coefficients:}
+
+\begin{itemize}
+	\item \textbf{\( \beta_0 \) (intercept, -0.27266):} On average, when 0 countries participate in the agreement and there are no sanctions, the log(odds) of an individual supporting a policy equals -0.27266. The estimated odds of this are $\approx 0.76$ ($\approx 24\%$)(baseline odds ratio).
+	\item \textbf{ \( \beta_1 \) (countries80 of 192, 0.33636): }On average, holding all the other variables constant, having 80 of 192 countries participating in the agreement is associated with an increase in the log(odds) of an individual supporting a policy by $\approx 0.336$ and an increase in the odds by a factor of $\approx 1.4$ ($\approx 40\%$), compared to the reference category.
+	\item \textbf{\( \beta_2 \) (countries160 of 192, 0.64835): }On average, holding all the other variables constant, having 160 of 192 countries participating in the agreement is associated with an increase in the log(odds) of an individual supporting a policy by $\approx 0.65$ and an increase in the odds by a factor of $\approx 1.9$ ($\approx 91\%$), compared to the reference category.
+	\item \textbf{\( \beta_3 \) (sanctions5\%, 0.19186): }On average, holding all the other variables constant, setting a level of  sanctions for missing emission reduction targets at 5\% is associated with an increase in the log(odds) of an individual supporting a policy by $\approx 0.19$ and an increase in the odds by a factor of $\approx 1.22$ ($\approx 21\%$), compared to the reference category.
+	\item \textbf{\( \beta_4 \) (sanctions15\%, -0.13325): }On average, holding all the other variables constant, setting a level of  sanctions for missing emission reduction targets at 15\% is associated with a decrease in the log(odds) of an individual supporting a policy by $\approx 0.133$ and a decrease in the odds by a factor of $\approx 0.87$ ($\approx 12.5\%$), compared to the reference category.
+	\item \textbf{\( \beta_5 \) (sanctions20\%, -1.13325): }On average, holding all the other variables constant, setting a level of  sanctions for missing emission reduction targets at 20\% is associated with a decrease in the log(odds) of an individual supporting a policy by $\approx 1.33$ and a decrease in the odds by a factor of $\approx 0.74$ (($\approx 26\%$)), compared to the reference category.
+\end{itemize}
+
+\textit{Overall, }having more countries participating in the agreement is associated with higher support for the policy, while
+increasing sanctions  generally decreases such support, with milder sanctions (5\%) having a smaller impact compared to harsher ones (15\% and 20\%).
+
+
+\vspace{.25cm}
 \textbf{Global null hypothesis:}
 
 $H_0: \beta_1 = \beta_2 = \beta_3 = \beta_4 = \beta_5 = 0$ \\
@@ -145,6 +195,9 @@ $H_a: \beta_j \neq 0$ (at least one of the coefficients is not equal to zero)
 \vspace{.25cm}
 \textbf{P-value:}
 To establish whether at least one predictor is a significant predictor in our logistic regression model, we should compare the full model to the reduced model. We can use \texttt{anova()} function to perform a likelihood ratio test.
+
+	\lstinputlisting[language=R, firstline=63, lastline=67]{PS2MS.R} 
+	
 \begin{verbatim}
 	Model 1: choice ~ countries + sanctions
 	Model 2: choice ~ 1
@@ -154,7 +207,7 @@ To establish whether at least one predictor is a significant predictor in our lo
 \end{verbatim}
 
 P-value \textbf{$< 2.2e^{-16}$ }is extremely small and close to zero, therefore, we have found strong evidence to \underline{reject} the null hypothesis (the additional parameters within the full model do not significantly improve the fit as compared to the reduced model) at the $\alpha$ level = 0.05.
-
+\vspace{.25cm}
 
 	\end{enumerate}
 	
@@ -170,7 +223,7 @@ As our model is additive (not interactive), any $\beta$ change in  \texttt{sanct
 
 So, we could calculate the effect of increasing sanctions from  5\% to 15\% as a difference between $\beta_4$ and $\beta_3$ as follows:
 
-\lstinputlisting[language=R, firstline=62, lastline=63]{PS2MS.R} 
+\lstinputlisting[language=R, firstline=70, lastline=71]{PS2MS.R} 
 
 \begin{verbatim}
 	-0.3251028
@@ -178,13 +231,13 @@ So, we could calculate the effect of increasing sanctions from  5\% to 15\% as a
 
 \textbf{Interpretation:} On average, holding all the other variables constant, increasing sanctions from 5\% to 15\% is associated with a 0.3251028 decrease in the log odds of an individual supporting the policy.
 
-\lstinputlisting[language=R, firstline=65, lastline=67]{PS2MS.R} 
+\lstinputlisting[language=R, firstline=73, lastline=75]{PS2MS.R} 
 
 \begin{verbatim}
  0.7224531
 \end{verbatim}
 
-\lstinputlisting[language=R, firstline=69, lastline=71]{PS2MS.R} 
+\lstinputlisting[language=R, firstline=77, lastline=79]{PS2MS.R} 
 
 \begin{verbatim}
 	27.75469 
@@ -207,12 +260,12 @@ Given that \( X_{\text{countries80}} = 1 \) and \( \beta_2 = 0 \),
 \[ P(Y_i = 1|X_i) = \frac{e^{\beta_0 + \beta_1 \cdot 1 + 0 \cdot X_{\text{sanctionsnone}}}}{1 + e^{\beta_0 + \beta_1 \cdot 1 + 0 \cdot X_{\text{sanctionsnone}}}} = \frac{1}{1 + e^{-(\beta_0 + \beta_1)}} \]
 
 
-	\lstinputlisting[language=R, firstline=73, lastline=76]{PS2MS.R} 
+	\lstinputlisting[language=R, firstline=81, lastline=84]{PS2MS.R} 
 	\begin{verbatim}
 		 0.5159191 
 	\end{verbatim}
 
-	\lstinputlisting[language=R, firstline=78, lastline=80]{PS2MS.R} 
+	\lstinputlisting[language=R, firstline=86, lastline=88]{PS2MS.R} 
 	
 		\begin{verbatim}
 		0.5159191 
@@ -229,7 +282,7 @@ There is an estimated probability of approximately 0.52 = 52\% that an individua
 		
 \textbf{First}, let's run an interactive logistic regression model: 
 
-	\lstinputlisting[language=R, firstline=82, lastline=86]{PS2MS.R} 
+	\lstinputlisting[language=R, firstline=90, lastline=94]{PS2MS.R} 
 	
 \textit{	(Oops, it is a really long summary table -- please see the next page)}
 
@@ -237,7 +290,7 @@ There is an estimated probability of approximately 0.52 = 52\% that an individua
 
 Even at a glance, we can see that the coefficients for all the interactive terms are not statistically significant, which can give us a notion that adding interaction to the model does not vastly contribute to explaining the variability in the response variable  \texttt{choice}. Let's perform a likelihood ratio test to support or reject this hypothesis:
 
-	\lstinputlisting[language=R, firstline=89, lastline=91]{PS2MS.R} 
+	\lstinputlisting[language=R, firstline=97, lastline=99]{PS2MS.R} 
 	
 \begin{verbatim}
 	Model 1: choice ~ countries + sanctions
@@ -254,7 +307,7 @@ Furthermore, including the interaction terms would potentially change the answer
 	\item \textbf{2(a)}: A given $\beta$ change in  \texttt{sanctions} may not have the same effect on the odds of an individual supporting the policy (\texttt{choice} = 1), as it may now be dependent on the specific number of \texttt{countries}  participating in the international agreement ('levels' of the other explanatory variable). However, the coefficient for the interactive term is not statistically significant.
 	\item \textbf{2(b)}: Let's estimate the same probability (that an individual will support a policy if there are 80 of 192 countries participating with no sanctions) using the interactive model now, and then compare:
 	
-	\lstinputlisting[language=R, firstline=93, lastline=95]{PS2MS.R} 
+	\lstinputlisting[language=R, firstline=101, lastline=103]{PS2MS.R} 
 	
 	\begin{verbatim}
 	0.5252101 
@@ -262,7 +315,7 @@ Furthermore, including the interaction terms would potentially change the answer
 	
 	Calculating the difference of two probabilities: 
 	
-		\lstinputlisting[language=R, firstline=98, lastline=98]{PS2MS.R} 
+		\lstinputlisting[language=R, firstline=106, lastline=106]{PS2MS.R} 
 	
 		\begin{verbatim}
 	0.009291008 

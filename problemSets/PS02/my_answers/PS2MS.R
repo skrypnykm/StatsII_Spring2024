@@ -52,6 +52,14 @@ glm_full <- glm (choice ~ countries + sanctions,
 summary(glm_full)
 stargazer(glm_full)
 
+#Calculating odds ratio of the coefficients
+odds_ratios <- exp(glm_full$coefficients)
+print(odds_ratios)
+
+#Calculating percentages
+percentages <- (odds_ratios-1)*100
+print(percentages)
+
 #Reduced model
 glm_reduced <- glm(choice ~ 1, data = climateSupport, family = binomial(link = "logit"))
 
@@ -63,11 +71,11 @@ change <- glm_full$coefficients["sanctions15%"] - glm_full$coefficients["sanctio
 print(change)
 
 #Calculating the odds ratio
-odds_ratio <- exp(change)
-print(odds_ratio)
+odds_ratio1 <- exp(change)
+print(odds_ratio1)
 
 #Calculating the percentage
-percentage <- (1-odds_ratio)*100
+percentage <- (odds_ratio1-1)*100
 print(percentage)
 
 #Calculating the probability
