@@ -98,6 +98,11 @@ stargazer(interactive_glm)
 lrt <- anova(glm_full, interactive_glm, test = "LRT")
 print(lrt)
 
+#Calculating change in odds of Choice=1 if sanctions rise from 5% to 15% 
+#(interactive model)
+change2 <- interactive_glm$coefficients["sanctions15%"] - glm_full$coefficients["sanctions5%"]
+print(change2)
+
 #Calculating the probability (interactive model)
 probability3 <- predict(interactive_glm, newdata = data.frame(countries = "80 of 192", sanctions = "None"), type = "response")
 print(probability3)

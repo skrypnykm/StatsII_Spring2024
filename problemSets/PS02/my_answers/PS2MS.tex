@@ -300,14 +300,21 @@ Even at a glance, we can see that the coefficients for all the interactive terms
 	2      8488      11562  6   6.2928   0.3912
 \end{verbatim}
 
-Given the \textbf{p-value} of 0.3912, we have \underline{not} found evidence to reject the null hypothesis (adding an interaction to the model does not significantly improve its fit) at the $\alpha$ level = 0.05. This suggests that the association between the response variable and the predictor variables can be explained by the main effects of the predictors alone, without considering their interactions.
+Given the \textbf{p-value} of 0.3912, we have \underline{not} found evidence to reject the null hypothesis (adding an interaction to the model does not significantly improve its fit) at the $\alpha$ level = 0.05. This suggests that the association between the response variable and the predictor variables can be explained by the main effects of the predictors alone, without considering their interactions. This can also be supported by the fact that the coefficients for most of the interaction terms are not statistically significant.
 	
 Furthermore, including the interaction terms would potentially change the answers both to 2(a) and 2(b):
 \begin{itemize}
-	\item \textbf{2(a)}: A given $\beta$ change in  \texttt{sanctions} may not have the same effect on the odds of an individual supporting the policy (\texttt{choice} = 1), as it may now be dependent on the specific number of \texttt{countries}  participating in the international agreement ('levels' of the other explanatory variable). However, the coefficient for the interactive term is not statistically significant.
+	\item \textbf{2(a)}: A given $\beta$ change in  \texttt{sanctions} may not have the same effect on the odds of an individual supporting the policy (\texttt{choice} = 1), as it may now be dependent on the specific number of \texttt{countries}  participating in the international agreement ('levels' of the other explanatory variable). We can see that in the new model, the coefficients of interest have changed; therefore, the effect of increasing sanctions from 5\% to 15\% would change as well:
+		\lstinputlisting[language=R, firstline=101, lastline=104]{PS2MS.R} 
+	
+		\begin{verbatim}
+	   -0.288724 
+	\end{verbatim}
+	
+	(as compared to  -0.3251028).
 	\item \textbf{2(b)}: Let's estimate the same probability (that an individual will support a policy if there are 80 of 192 countries participating with no sanctions) using the interactive model now, and then compare:
 	
-	\lstinputlisting[language=R, firstline=101, lastline=103]{PS2MS.R} 
+	\lstinputlisting[language=R, firstline=106, lastline=108]{PS2MS.R} 
 	
 	\begin{verbatim}
 	0.5252101 
@@ -315,7 +322,7 @@ Furthermore, including the interaction terms would potentially change the answer
 	
 	Calculating the difference of two probabilities: 
 	
-		\lstinputlisting[language=R, firstline=106, lastline=106]{PS2MS.R} 
+		\lstinputlisting[language=R, firstline=111, lastline=111]{PS2MS.R} 
 	
 		\begin{verbatim}
 	0.009291008 
