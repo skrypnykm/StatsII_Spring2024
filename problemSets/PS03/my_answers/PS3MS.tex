@@ -139,7 +139,6 @@
 	\item \textbf{Intercept (positive), 93.108: } On average, when a country is non-democratic and does not produce any oil, the baseline odds of going from having no change in GDP difference to a positive GDP difference  $\approx 93.108$. 
 	
 \textit{Both intercepts are statistically differentiable from zero at the $\alpha$-level = 0.05.  }
-(Though not specifically useful..)
 	\item \textbf{REG(negative), 3.972}: On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated with an increase by a multiplicative factor of 3.972 in the odds of going from having no change in GDP difference to a negative GDP difference. 
 	\item \textbf{REG(positive), 5.865}: On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated with an increase by a multiplicative factor of 5.865 in the odds of going from having no change in GDP difference to a positive GDP difference. \textit{The coefficient is statistically differentiable from zero at the $\alpha$-level = 0.05.}
 	\item \textbf{OIL(negative), 119.578}: On average and holding all the other predictors constant, a shift from not producing oil to producing oil for a country  is associated with an increase by a multiplicative factor of 119.578 in the odds of going from having no change in GDP difference to a negative GDP difference.
@@ -219,8 +218,7 @@ OIL & 0.820 & 0.655 & 1.031 \\
 	\item \textbf{Intercept: negative-no change, \( \mathbf{e^{-0.731} = 2.07} \)} + \textbf{Intercept: no-change-positive, \( \mathbf{e^{-0.711} = 2.03} \)}: 
  \begin{itemize}
         \item The intercepts are very similar to each other. Therefore, we assume that the "proportional odds"/"parallel regression assumption" holds for the ordered model, which makes sense: the categories we imposed are inherently ordinal (negative $\rightarrow$ no change $\rightarrow$ positive). Thus, also, the effect of the predictors on the outcome variable is the same across all of its categories. 
-        \item Technically, the coefficients depict that on average, when a country is non-democratic and does not produce any oil, the baseline odds of going from a lower category to a higher category (any pair of them, as this is an ordered model) in GDP difference $\approx 2$. 
-        \item We might also interpret the intercepts as the cutoff points for the ordered model.
+        \item While the intercepts for the ordered model do not exactly have an intuitive meaning, or an interpretation alike to the ordered model, we might interpret them as the cutoff points for shifting from the lower category of the outcome variable to the higher one.
     \end{itemize} 
  
 	\item \textbf{REG, 0.398:} On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated an increase by a multiplicative factor of 1.490 in the odds of observing a next/higher category (any one of them, "proportional odds"/"parallel regression assumption" again) of the GDP difference. (Increase in odds and probability).
