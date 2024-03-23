@@ -138,11 +138,13 @@
 	\item \textbf{Intercept (negative), 44.942: }  On average, when a country is non-democratic and does not produce any oil, the baseline odds of going from having no change in GDP difference to a negative GDP difference  $\approx 44.942$.  
 	\item \textbf{Intercept (positive), 93.108: } On average, when a country is non-democratic and does not produce any oil, the baseline odds of going from having no change in GDP difference to a positive GDP difference  $\approx 93.108$. 
 	
-\textit{Both intercepts are statistically differentiable from zero at the $\alpha$-level = 0.05.  }
-	\item \textbf{REG(negative), 3.972}: On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated with an increase by a multiplicative factor of 3.972 in the odds of going from having no change in GDP difference to a negative GDP difference. 
-	\item \textbf{REG(positive), 5.865}: On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated with an increase by a multiplicative factor of 5.865 in the odds of going from having no change in GDP difference to a positive GDP difference. \textit{The coefficient is statistically differentiable from zero at the $\alpha$-level = 0.05.}
+\textit{Both intercepts \underline{are} statistically differentiable from zero at the $\alpha$-level = 0.05.  }
+	\item \textbf{REG(negative), 3.972}: On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated with an increase by a multiplicative factor of 3.972 in the odds of going from having no change in GDP difference to a negative GDP difference.  \textit{The coefficient is \underline{not} statistically differentiable from zero at the $\alpha$-level = 0.05.}
+	\item \textbf{REG(positive), 5.865}: On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated with an increase by a multiplicative factor of 5.865 in the odds of going from having no change in GDP difference to a positive GDP difference. \textit{The coefficient\underline{ is} statistically differentiable from zero at the $\alpha$-level = 0.05.}
 	\item \textbf{OIL(negative), 119.578}: On average and holding all the other predictors constant, a shift from not producing oil to producing oil for a country  is associated with an increase by a multiplicative factor of 119.578 in the odds of going from having no change in GDP difference to a negative GDP difference.
-	\item \textbf{OIL(positive), 97.156}: On average and holding all the other predictors constant, a shift from not producing oil to producing oil for a country  is associated with an increase by a multiplicative factor of 97.156 in the odds of going from having no change in GDP difference to a positive GDP difference.
+	\item \textbf{OIL(positive), 97.156}: On average and holding all the other predictors constant, a shift from not producing oil to producing oil for a country  is associated with an increase by a multiplicative factor of 97.156 in the odds of going from having no change in GDP difference to a positive GDP difference. \\
+	
+\textit{Both coefficients for \texttt{OIL} are \underline{not} statistically differentiable from zero at the $\alpha$-level = 0.05.}
 	\end{itemize}
 
 	
@@ -219,11 +221,13 @@ OIL & 0.820 & 0.655 & 1.031 \\
  \begin{itemize}
         \item The intercepts are very similar to each other. Therefore, we assume that the "proportional odds"/"parallel regression assumption" holds for the ordered model, which makes sense: the categories we imposed are inherently ordinal (negative $\rightarrow$ no change $\rightarrow$ positive). Thus, also, the effect of the predictors on the outcome variable is the same across all of its categories. 
         \item While the intercepts for the ordered model do not exactly have an intuitive meaning, or an interpretation alike to the ordered model, we might interpret them as the cutoff points for shifting from the lower category of the outcome variable to the higher one.
+        
+        \textit{Both coefficients are \underline{not} statistically differentiable from zero at the $\alpha$-level = 0.05.}
     \end{itemize} 
  
 	\item \textbf{REG, 0.398:} On average and holding all the other predictors constant, a shift from being a non-democratic to a democratic country is associated an increase by a multiplicative factor of 1.490 in the odds of observing a next/higher category (any one of them, "proportional odds"/"parallel regression assumption" again) of the GDP difference. (Increase in odds and probability).
 \textit{This coefficient is statistically differentiable from zero at the $\alpha$-level = 0.05.  }
-	\item \textbf{OIL, 0.820}: On average and holding all the other predictors constant, a shift from not producing oil to producing oil for a country is associated with a change in odds of observing a next/higher category of the GDP difference by a multiplicative factor of 0.820. (Decrease in odds and probability).
+	\item \textbf{OIL, 0.820}: On average and holding all the other predictors constant, a shift from not producing oil to producing oil for a country is associated with a change in odds of observing a next/higher category of the GDP difference by a multiplicative factor of 0.820. (Decrease in odds and probability). \textit{The coefficient is \underline{not} statistically differentiable from zero at the $\alpha$-level = 0.05.}
 \end{itemize}
 
 \section*{Question 2} 
@@ -275,15 +279,38 @@ Akaike Inf. Crit. & 1,299.213 & & & \\
 
 \begin{table}[H] \centering   \caption{Poisson Model (exp.)}   \label{} \begin{tabular}{@{\extracolsep{5pt}} cccc} \\[-1.8ex]\hline \hline \\[-1.8ex]  & OR & 2.5 \% & 97.5 \% \\ \hline \\[-1.8ex] (Intercept) & $0.022$ & $0.014$ & $0.034$ \\ factor(competitive.district)1 & $0.922$ & $0.666$ & $1.302$ \\ marginality.06 & $0.125$ & $0.099$ & $0.156$ \\ factor(PAN.governor.06)1 & $0.732$ & $0.523$ & $1.007$ \\ \hline \\[-1.8ex] \end{tabular} \end{table} 
 
+
+	\vspace{.25cm}
+\textbf{Checking for overdispersion:}
+
+To check whether is would be more appropriate to fit a zero-inflated model as opposed to a general Poisson model to the given data, let's test it for overdispersion: 
+\lstinputlisting[language=R, firstline=101, lastline=101]{PS3MS.R} 
+
+\begin{verbatim}
+	Overdispersion test
+	
+	data:  mexico_poisson
+	z = 1.0668, p-value = 0.143
+	alternative hypothesis: true dispersion is greater than 1
+	sample estimates:
+	dispersion 
+	2.09834 
+\end{verbatim}
+
+Given that the p-value of 0.143 is no statistically differentiable from zero at the $\alpha$-level = 0.05, there is no sufficient evidence to reject the null hypothesis that the true dispersion is less or equal to 1; therefore, we could proceed with interpreting the original Poisson model.
+
+	\vspace{.25cm}
+\textbf{Do PAN presidential candidates visit the 'swing' districts more?}
+
 The coefficient for \texttt{competitive.district} would mean that for a given district, shifting from being a 'safe bet' to a 'swing' district, on average and holding other predictors constant, is associated with a change in the number of PAN presidential candidate visits by a multiplicative factor of 0.922 (which is essentially a decrease). Anyways, this coefficient
-is \textbf{not} statistically differentiable from zero at the $\alpha$-level = 0.05. Therefore, there is no sufficient evidence to reject the null hypothesis that PAN presidential candidates do not visit swing districts more often. In other words, there is no sufficient evidence to say that the candidates visit the 'swing' districts more often than the 'safe' ones.
+is \textbf{not} statistically differentiable from zero at the $\alpha$-level = 0.05. Therefore, there is no sufficient evidence to reject the null hypothesis that PAN presidential candidates do not visit 'swing' districts more often. In other words, there is no sufficient evidence to say that the candidates visit 'swing' districts more often than the 'safe' ones.
 
 
 	\item [(b)]
 	Interpret the \texttt{marginality.06} and \texttt{PAN.governor.06} coefficients.
 \begin{itemize}
-    \item \texttt{marginality.06}, \textbf{0.125}: For a given district, shifting from having an average poverty level (0) to a marginal poverty level (1) is, on average and holding all the other predictors constant, associated with a change in the number of PAN presidential candidate visits by a multiplicative factor of 0.125 (which means a decrease in the number of visits).
-    \item \texttt{PAN.governor.06}, \textbf{0.732}: For a given district, shifting from not having a PAN-affiliated governor (0) to having one (1) is, on average and holding all the other predictors constant, associated with a change in the number of PAN presidential candidate visits by a multiplicative factor of 0.732 (which means a decrease in the number of visits).
+    \item \texttt{marginality.06}, \textbf{0.125}: For a given district, shifting from having an average poverty level (0) to a marginal poverty level (1) is, on average and holding all the other predictors constant, associated with a change in the number of PAN presidential candidate visits by a multiplicative factor of 0.125 (which means a decrease in the number of visits). \textit{The coefficient \underline{is} statistically differentiable from zero at the $\alpha$-level = 0.05.}
+    \item \texttt{PAN.governor.06}, \textbf{0.732}: For a given district, shifting from not having a PAN-affiliated governor (0) to having one (1) is, on average and holding all the other predictors constant, associated with a change in the number of PAN presidential candidate visits by a multiplicative factor of 0.732 (which means a decrease in the number of visits). \textit{The coefficient is \underline{not} statistically differentiable from zero at the $\alpha$-level = 0.05 (though it is quite close...).}
 \end{itemize}
 
 
@@ -293,7 +320,7 @@ is \textbf{not} statistically differentiable from zero at the $\alpha$-level = 0
 	
 	Just in terms of conducting basic exploratory data analysis, to get an overall idea of the visits frequency, let's calculate the mean number of visits of the winning PAN presidential candidate:
 	
-		\lstinputlisting[language=R, firstline=101, lastline=101]{PS3MS.R} 
+		\lstinputlisting[language=R, firstline=104, lastline=104]{PS3MS.R} 
 	
 	\begin{verbatim}
 		[1] 0.09181554
@@ -328,7 +355,7 @@ Given \texttt{competitive.district} = 1, \texttt{marginality.06 = 0}, \texttt{PA
 \hat{\textbf{\texttt{PAN.visits.06}}_i} = e^{(-3.810 - (0.081 \cdot 1) - (2.080 \cdot 0) - (0.312 \cdot 1)}
 \]
 
-\lstinputlisting[language=R, firstline=104, lastline=106]{PS3MS.R} 
+\lstinputlisting[language=R, firstline=107, lastline=109]{PS3MS.R} 
 
 \texttt{0.01494818}
 

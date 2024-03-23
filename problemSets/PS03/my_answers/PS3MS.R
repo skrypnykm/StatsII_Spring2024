@@ -97,6 +97,9 @@ exp_mexico_poisson
 #Formatting a result table
 stargazer(exp_mexico_poisson, type = "latex", title = "Poisson Model (exp.)")
 
+#Testing for overdispersion
+dispersiontest(mexico_poisson)
+
 #Exploratory analysis of the outcome variable: calculating a mean number of visits
 mean(mexico_elections$PAN.visits.06)
 
