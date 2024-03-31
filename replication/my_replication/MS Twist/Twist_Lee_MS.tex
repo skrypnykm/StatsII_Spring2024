@@ -72,11 +72,16 @@
 
 \section{Twist 1: Plots}
 
+
 \textbf{Loading the data:}
 \lstinputlisting[language=R, firstline=14, lastline=17]{Twist_Lee_MS.R} 
 
 
 \noindent \textbf{Figure 2 Twist:}
+
+On p. 581, Lee presents four plots (Figure 2: 'I select four African oil-producing countries that have received Chinese aid (\textbf{Angola, Cameroon, Nigeria, Tunisia }— MS) , and graphically present the amount of aid received and their oil production from 2000 to 2013 in figure 2. As shown in figure 2, Chinese aid (denoted by the solid line) fluctuates from year to year, whereas oil production (denoted by the dashed line) is relatively stable over time. Angola, for example, received more than 2 billion dollars from China in 2005, 2007, and 2011 each but none in 2000 or 2009. In other words, if the time-serial variation is taken into account, the results may be confounded by the volatility of Chinese aid. Because the annual aid amount is subject to the Chinese government’s yearly budget, it is less likely that it will clearly follow aid recipients’ oil production every year. \textit{When I only focus on the variation across African countries, however, it is observed that \textbf{African oil producers in general receive more Chinese aid than non–oil producers.}}.
+
+My idea was to test this last finding, therefore I randomly chose one non-oil producing state from each of the five UN African regions: \textbf{Morocco} from Northern Africa, \textbf{Senegal} from Western Africa, \textbf{Central African Republic} from Central Africa, \textbf{Burundi} from Eastern Africa, and \textbf{Botswana} from Southern Africa, and created similar plots of the amount of Chinese aid receives over their oil production 2000-2013 (which is denoted as 0 in this dataset). I also plotted one other major African oil-producer, Sudan, which was not included in Lee's initial analysis, to compare with the non-oil producers. \textbf{Overall. Lee's findings were proved to be correct: if focused on the variation across African countries, it is indeed observed that African non-oil producers receive notably less Chinese aid that oil-producers. }
 
 \lstinputlisting[language=R, firstline=20, lastline=92]{Twist_Lee_MS.R}  
 
@@ -88,6 +93,27 @@
 
 \newpage
 \textbf{Model 1 Twist:}
+
+Lee, p. 576: 'To test the first hypothesis (China is more likely to build partnerships with countries abundant in energy resources — MS), I use data on China’s partnerships. Beijing considers three types of partnerships—partnerships, strategic partnerships, and comprehensive strategic partnerships. [...]. A country is coded as 1 as long as it has a partnership connection with China, regardless of the type'
+Lee, p. 579-580: '... the sample includes 125 developing countries. Developed countries (i.e., OECD members) are excluded from the sample because their relationships and interactions with China may follow a different pattern. All the independent and control variables enter the model at their mean values between 1992 and 2012.'. 'As can be seen, the coefficient for oil production is positive and statistically significant at the 5 percent level. This means that \textbf{China is more likely to build partnerships with oil-producing countries. }'. 'In other words, energy abundance plays an important role in determining Beijing’s partnership building. In addition to oil production, FDI has a strong, positive effect in models 1 and 2, meaning that \textbf{China is more likely to form partnerships with countries that receive more FDI.} Trade importance is also positively associated with the formation of strategic or comprehensive strategic partnerships (Model 2 — MS). These findings show that \textbf{China’s partnership diplomacy is largely driven by economic considerations.}'.
+
+While original binomial logit Model 1 includes a binary dependent variable on partnership (0, 1), the dataset itself has more detailed data on the type of partnerships that China has with the non-OECD countries. It includes dummy variables for each of the three types of partnerships: \textbf{partnership, strategic partnership, comprehensive strategic partnership.} My understanding is that these types of partnership are following a certain order, though it might not be the case. My idea was to fit an unordered and ordered logit models with the same dependent variable (though relevelled accordingly for each of the models) and predictors, to test whether they would deliver any additional insights or be of better fit to the data. 
+
+I exponentiated the coefficients for all the models for better clarity, and calculated predicted probabilities to fit confusion matrices, which also helped with establishing the accuracy score of the models. I also estimated the models' statistics, such as \textbf{residual deviance} (how much probabilities estimated from our model differ from the observed proportions of successes), \textbf{Akaike Information Criterion} and \textbf{Bayesian Information Criterion} (goodness of fit measures), and performed \textbf{a Brant test} on the ordered model to establish whether the "proportional odds assumption" holds in its case. 
+
+The following conclusions can be driven from my "twist":
+
+\begin{itemize}
+    \item New models confirmed the initial findings that China is more likely to build partnerships with countries abundant in
+energy resources + it is also driven by economic considerations (significant coefficients for Oil production, FDI inflows, Trade importance).
+\item Both new models performed reasonably efficiently as compared to the initial binomial model, though the ordered
+model achieved a higher accuracy score and coefficients more similar in value.
+\item Parallel Regression Assumption (PRA) holds for the ordered model, which makes it a more adequate fit for the data.
+\item Interesting experiment overall, BUT: the original binomial logit Model 1 is still the most accurate → we might assume
+that being China’s partner versus not being China’s partner at all carries greater significance compared to being involved
+in a specific type of partnership.
+\end{itemize}
+
 
 \lstinputlisting[language=R, firstline=97, lastline=131]{Twist_Lee_MS.R}  
 
